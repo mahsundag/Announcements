@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Announcements.Repository
 {
-    public class AnnouncumentsDbContext:DbContext
+    public class AnnouncementsDbContext:DbContext
     {
-        public AnnouncumentsDbContext(DbContextOptions<AnnouncumentsDbContext> options):base(options)
+        public AnnouncementsDbContext(DbContextOptions<AnnouncementsDbContext> options):base(options)
         {
             
         }
