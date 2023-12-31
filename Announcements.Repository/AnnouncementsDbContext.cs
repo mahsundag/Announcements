@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Announcements.Repository
 {
-    public class AnnouncementsDbContext:DbContext
+    public class AnnouncementsDbContext : DbContext
     {
-        public AnnouncementsDbContext(DbContextOptions<AnnouncementsDbContext> options):base(options)
+        public AnnouncementsDbContext(DbContextOptions<AnnouncementsDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Announcement> Announcements { get; set; }
@@ -22,7 +22,7 @@ namespace Announcements.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
+         
             base.OnModelCreating(modelBuilder);
         }
     }

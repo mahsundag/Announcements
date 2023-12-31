@@ -18,6 +18,7 @@ namespace Announcements.Repository.Configurations
             builder.Property(e => e.Id).UseIdentityColumn();
             builder.Property(e => e.Title).IsRequired();
             builder.Property(e => e.Slug).IsRequired();
+
         }
     }
 }
