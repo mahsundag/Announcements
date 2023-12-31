@@ -1,6 +1,7 @@
 ﻿using Announcements.Core;
 using Announcements.Core.Announcements;
 using Announcements.Core.DTOs.AnnouncementDTOs.Announcements;
+using Announcements.Service.Services.Announcements;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,9 @@ namespace Announcements.Controllers
     public class AnnouncementController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IService<Announcement> _service;
+        private readonly IAnnouncementService _service;
 
-        public AnnouncementController(IMapper mapper, IService<Announcement> service)
+        public AnnouncementController(IMapper mapper, IAnnouncementService service)
         {
             _mapper = mapper;
             _service = service;
@@ -29,7 +30,7 @@ namespace Announcements.Controllers
         /// <returns> list of specified range elements  </returns>
         [HttpGet]
         [SwaggerOperation(Summary = "Get Announcements By pager number and page size", Description = "Get Announcements By pager number and page size")]
-        public async Task<IActionResult> All(int pageNumber = 1,int pageSize = 10)
+        public async Task<IActionResult> GetAll(int pageNumber = 1,int pageSize = 10)
         {
             var annoumcements = await _service.GetAllAsync();
             var pagination =  annoumcements
@@ -48,15 +49,39 @@ namespace Announcements.Controllers
         /// <returns>spesific item which is called by slug endpoint</returns>
         [HttpGet("{slug}")]
         [SwaggerOperation(Summary = "Get Announcement By Slug", Description = "Get Announcement By Slug")]
-        public async Task<ActionResult<Announcement>> GetAnnouncementBySlug(string slug)
+        public Task<ActionResult<Announcement>> GetAnnouncementBySlug(string slug)
         {
             var announcements = _service.Where(a => a.Slug == slug);
 
             if (!announcements.Any())
             {
-                return NotFound();
+                return Task.FromResult<ActionResult<Announcement>>(NotFound());
             }
-            return Ok(announcements.FirstOrDefault());
+            return Task.FromResult<ActionResult<Announcement>>(Ok(announcements.FirstOrDefault()));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(AnnouncementDto announcementDto)
+        {
+            var announcement = await _service.AddAsync(_mapper.Map<Announcement>(announcementDto));
+            return Ok(announcement);
+        }
+
+        [HttpPut]
+
+        public async Task<IActionResult> Update(AnnouncementDto announcementDto)
+        {
+            await _service.UpdateAsync(_mapper.Map<Announcement>(announcementDto));
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var announcement = await _service.GetByIdAsync(id);
+            await _service.RemoveAsync(announcement);
+            return Ok();
+        }
+
     }
 }
