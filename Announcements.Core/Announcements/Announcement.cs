@@ -16,6 +16,6 @@ namespace Announcements.Core.Announcements
 
         public DateTime Date { get; set; }
 
-        public AnnouncementDetail AnnouncementDetail { get; set; }
+        public AnnouncementDetail? AnnouncementDetail { get; set; }
     }
 }
