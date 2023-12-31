@@ -1,5 +1,7 @@
 using Announcements.Core;
 using Announcements.Repository;
+using Announcements.Service.Mapping;
+using Announcements.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -14,7 +16,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
+builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
+builder.Services.AddAutoMapper(typeof(MapProfile));
 
 builder.Services.AddDbContext<AnnouncementsDbContext>(d =>
 {
