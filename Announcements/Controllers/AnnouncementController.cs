@@ -59,23 +59,54 @@ namespace Announcements.Controllers
             }
             return Task.FromResult<ActionResult<Announcement>>(Ok(announcements.FirstOrDefault()));
         }
+        /// <summary>
+        /// Gets Announcement with Id , we added id:int for the multiple root match exception
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Announcement</returns>
+        [HttpGet("{id:int}")]
+        [SwaggerOperation(Summary = "Get Announcement By Id", Description = "Get Announcement By Id")]
+        public Task<ActionResult<Announcement>> GetAnnouncementById(int id)
+        {
+            var announcements = _service.Where(a => a.Id == id);
 
+            if (!announcements.Any())
+            {
+                return Task.FromResult<ActionResult<Announcement>>(NotFound());
+            }
+            return Task.FromResult<ActionResult<Announcement>>(Ok(announcements.FirstOrDefault()));
+        }
+        /// <summary>
+        /// Creating Announcement without detail part
+        /// </summary>
+        /// <param name="announcementDto"></param>
+        /// <returns>announcement</returns>
         [HttpPost]
+        [SwaggerOperation(Summary = "Create Announcement", Description = "Create an Announcement By Model")]
         public async Task<IActionResult> Create(AnnouncementDto announcementDto)
         {
             var announcement = await _service.AddAsync(_mapper.Map<Announcement>(announcementDto));
             return Ok(announcement);
         }
-
+        /// <summary>
+        /// Updates a spesific announcement 
+        /// </summary>
+        /// <param name="announcementDto"></param>
+        /// <returns></returns>
         [HttpPut]
-
+        [SwaggerOperation(Summary = "Update Announcement", Description = "Update an Announcement By Model")]
         public async Task<IActionResult> Update(AnnouncementDto announcementDto)
         {
             await _service.UpdateAsync(_mapper.Map<Announcement>(announcementDto));
             return Ok();
         }
+        /// <summary>
+        /// Deletes A Announcement without Detail
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
-
+        [SwaggerOperation(Summary = "Delete Announcement", Description = "Delete an Announcement By Id")]
         public async Task<IActionResult> Delete(int id)
         {
             var announcement = await _service.GetByIdAsync(id);
