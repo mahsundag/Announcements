@@ -48,9 +48,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowEverything", builder =>
     {
-        builder.AllowAnyOrigin() // Her kökene izin ver
-               .AllowAnyHeader()  // Her ba?l??a izin ver
-               .AllowAnyMethod(); // Her metoda izin ver
+        builder.AllowAnyOrigin() 
+               .AllowAnyHeader()  
+               .AllowAnyMethod(); 
     });
 });
 
