@@ -45,11 +45,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<CustomExceptionHandler>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<CustomExceptionHandler>();
 app.MapControllers();
 
 app.Run();
