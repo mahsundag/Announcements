@@ -43,7 +43,6 @@ namespace Announcement.Test.Announcements
 
             mockRepo.Setup(repo => repo.GetAll()).Returns(expectedAnnouncementDetails);
 
-            // Entity Framework Core için gerekli olan IAsyncEnumerable desteğini ekleyin
             var mockIQueryable = expectedAnnouncementDetails.AsQueryable().BuildMock();
             mockRepo.Setup(m => m.GetAll()).Returns(mockIQueryable);
 

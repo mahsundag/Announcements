@@ -35,11 +35,16 @@ namespace Announcements.Controllers
         {
             _logger.LogInformation("Getting All Data");
             var annoumcements = await _service.GetAllAsync();
+            var announcementsCount = annoumcements.Count();
             var pagination =  annoumcements
                                  .Skip((pageNumber - 1) * pageSize)
                                  .Take(pageSize);
-                                 
-            var annDtos = _mapper.Map<List<AnnouncementDto>>(pagination.ToList());
+            var result = new AnnouncementListResponseDto
+            {
+                Count = announcementsCount,
+                Data = _mapper.Map<List<AnnouncementDto>>(pagination)
+            };
+            var annDtos = _mapper.Map<AnnouncementListResponseDto>(result);
 
             return Ok(annDtos);
 
