@@ -1,4 +1,5 @@
 using Announcements.Core;
+using Announcements.Middlewares;
 using Announcements.Repository;
 using Announcements.Service.Mapping;
 using Announcements.Service.Services;
@@ -44,7 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<CustomExceptionHandler>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
