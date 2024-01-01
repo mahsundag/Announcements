@@ -44,7 +44,15 @@ builder.Services.AddDbContext<AnnouncementsDbContext>(d =>
 
     });
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowEverything", builder =>
+    {
+        builder.AllowAnyOrigin() // Her kökene izin ver
+               .AllowAnyHeader()  // Her ba?l??a izin ver
+               .AllowAnyMethod(); // Her metoda izin ver
+    });
+});
 
 var app = builder.Build();
 app.MapHealthChecks("/health");
@@ -60,6 +68,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseMiddleware<CustomExceptionHandler>();
+
+app.UseCors("AllowEverything");
 app.MapControllers();
 
 app.Run();
