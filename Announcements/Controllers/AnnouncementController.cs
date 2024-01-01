@@ -16,11 +16,12 @@ namespace Announcements.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IAnnouncementService _service;
-
-        public AnnouncementController(IMapper mapper, IAnnouncementService service)
+        private readonly ILogger<AnnouncementController> _logger;
+        public AnnouncementController(IMapper mapper, IAnnouncementService service, ILogger<AnnouncementController> logger)
         {
             _mapper = mapper;
             _service = service;
+            _logger = logger;
         }
         /// <summary>
         /// Gets page number and page size and return elements in that range
@@ -32,6 +33,7 @@ namespace Announcements.Controllers
         [SwaggerOperation(Summary = "Get Announcements By pager number and page size", Description = "Get Announcements By pager number and page size")]
         public async Task<IActionResult> GetAll(int pageNumber = 1,int pageSize = 10)
         {
+            _logger.LogInformation("Getting All Data");
             var annoumcements = await _service.GetAllAsync();
             var pagination =  annoumcements
                                  .Skip((pageNumber - 1) * pageSize)
@@ -55,6 +57,7 @@ namespace Announcements.Controllers
 
             if (!announcements.Any())
             {
+                _logger.LogInformation("No Data.");
                 return Task.FromResult<ActionResult<Announcement>>(NotFound());
             }
             return Task.FromResult<ActionResult<Announcement>>(Ok(announcements.FirstOrDefault()));

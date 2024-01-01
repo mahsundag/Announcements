@@ -16,11 +16,13 @@ namespace Announcements.Controllers
         private readonly IMapper _mapper;
         private readonly IAnnouncementDetailService _service;
         private readonly IAnnouncementService _announcementService;
-        public AnnouncementDetailController(IMapper mapper, IAnnouncementDetailService service, IAnnouncementService announcementService)
+        private readonly ILogger<AnnouncementDetailController> _logger;
+        public AnnouncementDetailController(IMapper mapper, IAnnouncementDetailService service, IAnnouncementService announcementService, ILogger<AnnouncementDetailController> logger)
         {
             _mapper = mapper;
             _service = service;
             _announcementService = announcementService;
+            _logger = logger;
         }
         /// <summary>
         /// Get Announcement by AnnouncementId 
@@ -35,6 +37,7 @@ namespace Announcements.Controllers
 
             if (!announcementDetails.Any())
             {
+                _logger.LogInformation("No Data.");
                 return Task.FromResult<ActionResult<AnnouncementDetail>>(NotFound());
             }
             return Task.FromResult<ActionResult<AnnouncementDetail>>(Ok(announcementDetails.First()));
