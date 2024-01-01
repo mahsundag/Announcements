@@ -14,7 +14,7 @@ const AnnouncementDetail = () => {
     const fetchData = async () => {
       const res = await getAnnouncementDetail(params.slug);
       setAnnouncement(res);
-      console.log(res);
+      
     };
     fetchData();
   }, [params.slug]);
