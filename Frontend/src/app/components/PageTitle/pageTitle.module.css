@@ -1,0 +1,13 @@
+.container{
+    padding: var(--page-space);
+    background-color: var(--color-background);
+}
+.title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+.title h1{
+   font-weight: 600;
+}

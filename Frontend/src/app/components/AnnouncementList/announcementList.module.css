@@ -1,0 +1,8 @@
+.container {
+  padding: var(--page-space);
+}
+@media (max-width: 768px) {
+  .container {
+    padding: 0;
+  }
+}

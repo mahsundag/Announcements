@@ -1,0 +1,6 @@
+.header {
+  display: flex;
+  box-shadow: var(--box-shadow);
+  padding: var(--page-space);
+}
+

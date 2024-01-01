@@ -1,0 +1,9 @@
+.title{
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+.message{
+    padding: 20px;
+    text-align: center;
+}

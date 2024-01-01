@@ -1,0 +1,35 @@
+.container{
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: var(--border-radius);
+}
+.container:hover{
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    transition: all .3s;
+    cursor: pointer;
+}
+.container:hover .description{
+    color: var(--color-black);
+}
+.date{
+    font-size: 12px;
+    color: var(--color-text-light);
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-left: 1px solid var(--color-border);
+    padding: 0 16px;
+}
+.title{
+    font-weight: 600;
+    font-size: 18px;
+}
+.description{
+    font-size: 14px;
+    color: var(--color-text);
+}

@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    padding: var(--page-space);
+    gap: 8px;
+}
+.item{
+   width: 24px;
+   height: 24px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: var(--border-radius);
+   outline: none;
+   border: none;
+}
+.item:hover:not(:disabled){
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: all .5s;
+}
