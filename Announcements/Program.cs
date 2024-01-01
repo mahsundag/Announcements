@@ -4,6 +4,8 @@ using Announcements.Service.Mapping;
 using Announcements.Service.Services;
 using Announcements.Service.Services.AnnouncementDetails;
 using Announcements.Service.Services.Announcements;
+using Announcements.Service.Validations;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -11,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<AnnouncementDtoValidator>());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => { c.EnableAnnotations(); });
