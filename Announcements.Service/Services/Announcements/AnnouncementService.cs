@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Announcements.Service.Services.Announcements
@@ -19,10 +20,11 @@ namespace Announcements.Service.Services.Announcements
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
-     
+
 
         public async Task<Announcement> AddAsync(Announcement entity)
         {
+            entity.Slug = CreateSlug(entity.Title);
             await _repository.AddAsync(entity);
             await _unitOfWork.CommitAsync();
             return entity;
@@ -66,6 +68,27 @@ namespace Announcements.Service.Services.Announcements
         public IQueryable<Announcement> Where(Expression<Func<Announcement, bool>> expression)
         {
             return _repository.Where(expression);
+        }
+        private static string CreateSlug(string text)
+        {
+            var turkishMap = new Dictionary<char, char>
+        {
+            {'ç', 'c'}, {'ğ', 'g'}, {'ı', 'i'}, {'ö', 'o'}, {'ş', 's'}, {'ü', 'u'},
+            {'Ç', 'c'}, {'Ğ', 'g'}, {'İ', 'i'}, {'Ö', 'o'}, {'Ş', 's'}, {'Ü', 'u'}
+        };
+
+            var slug = "";
+            foreach (var c in text)
+            {
+                slug += turkishMap.ContainsKey(c) ? turkishMap[c] : c;
+            }
+
+            slug = slug.ToLower();
+            slug = Regex.Replace(slug, @"[^a-z0-9-]+", "-");
+
+            slug = slug.Trim('-');
+
+            return slug;
         }
     }
 }
